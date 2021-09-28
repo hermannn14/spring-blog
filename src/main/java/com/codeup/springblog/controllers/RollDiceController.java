@@ -25,7 +25,7 @@ public class RollDiceController {
 
         model.addAttribute("diceRoll", random);
         model.addAttribute("userGuess", n);
-        model.addAttribute("isCorrect", random);
+        model.addAttribute("isCorrect", random == n);
 
         return "roll-dice";
 

@@ -22,7 +22,10 @@
     <div th:if="${userGuess !null}">
         <h3>Your guess was: <span th:text="${userGuess}"></span> </h3>
         <h3>Number rolled: <span th:text="${diceRoll}"></span></h3>
-        <h2>Excellent! You guess right!</h2>
+        <h2 th:if="${isCorrect}">Excellent! You guess right!</h2>
+        <h2 th:if="${!isCorrect}">Sorry, try again.</h2>
+        <a href="/roll-dice">Try again!</a>
+
     </div>
 
 

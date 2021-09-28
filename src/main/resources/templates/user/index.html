@@ -8,11 +8,12 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 
-<div>
+<h2>Viewing All Posts</h2>
 
-    <div th:text="${postsId}"</div>
-    <div th:text="${post.title}">Title</div>
-    <div th:text="${post.body}">Body</div>
+
+    <div th:text="post : ${posts}">
+<h3 th:text="${post.title}">Title</h3>
+<div th:text="${post.body}">Body</div>
 </div>
 </body>
 </html>
