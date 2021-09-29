@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/head :: head('Spring Blog | Viewing one Post')">
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
-dgdgaga
+<h2>Viewing All Posts</h2>
 
+
+    <div th:text="post : ${posts}">
+<h3 th:text="${post.title}">Title</h3>
+<div th:text="${post.body}">Body</div>
+</div>
 </body>
 </html>
