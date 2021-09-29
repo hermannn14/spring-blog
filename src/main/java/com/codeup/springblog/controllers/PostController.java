@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.services.EmailService;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,11 +19,14 @@ public class PostController {
 
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
 
@@ -53,18 +56,26 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String showCreatePostForm() {
+    public String showCreatePostForm(Model model) {
+        model.addAttribute("post", new Post());
         return "post/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam(name = "title") String title,
-                             @RequestParam(name = "body") String body) {
+    public String createPost(@ModelAttribute Post postToAdd) {
+    //(@RequestParam(name = "title") String title,
+                             //@RequestParam(name = "body") String body) {
 
 //        Post postToAdd = new Post(title, body);
-        User owner = userDao.getById(1L);
-        Post postToAdd = new Post(title, body, owner);
+        postToAdd.setOwner(userDao.getById(1L));
+
+        emailService.prepareAndSend(
+                postToAdd,
+                "new post",
+                "You created a new Post"
+        );
+//        User owner = userDao.getById(1L);
+//        Post postToAdd = new Post(title, body, owner);
         postDao.save(postToAdd);
         return "redirect:/posts";
     }
