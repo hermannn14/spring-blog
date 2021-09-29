@@ -1,7 +1,9 @@
 package com.codeup.springblog.controllers;
 
 
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
+import com.codeup.springblog.repos.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,12 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao) {
+
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
 
@@ -57,7 +62,9 @@ public class PostController {
     public String createPost(@RequestParam(name = "title") String title,
                              @RequestParam(name = "body") String body) {
 
-        Post postToAdd = new Post(title, body);
+//        Post postToAdd = new Post(title, body);
+        User owner = userDao.getById(1L);
+        Post postToAdd = new Post(title, body, owner);
         postDao.save(postToAdd);
         return "redirect:/posts";
     }
@@ -75,9 +82,18 @@ public class PostController {
             @RequestParam(name = "title") String title,
             @RequestParam(name = "body") String body
     ) {
-        Post editedPost = new Post(id, title, body);
-        postDao.save(editedPost);
+//        Post editedPost = new Post(id, title, body);
+//        postDao.save(editedPost);
 
+// get existing info from post
+        Post postToUpdate = postDao.getById(id);
+
+        // update it contents
+        postToUpdate.setTitle(title);
+        postToUpdate.setBody(body);
+
+        // save updated post
+        postDao.save(postToUpdate);
         return "redirect:/posts";
 
     }
