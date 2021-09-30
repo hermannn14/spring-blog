@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<nav th:replace="partials/navbar :: navbar"></nav>
+
 <form th:action="@{|/posts/edit/${id}|}" th:method="post">
 
   <input type="text" name="title" placeholder="title">

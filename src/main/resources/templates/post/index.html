@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/head :: head('Spring Blog | Viewing one Post')">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,10 +11,18 @@
 
 <h2>Viewing All Posts</h2>
 
+<div sec:authorize="isAuthenticated()" >
+
+    <h3>Welcome, <span th:text="${#authentication.principal.username}"/>!!</h3>
+
+</div>
+
 
     <div th:text="post : ${posts}">
 <h3 th:text="${post.title}">Title</h3>
 <div th:text="${post.body}">Body</div>
-</div>
+        <p th:text="${post.owner.username}" ></p>
+
+    </div>
 </body>
 </html>
