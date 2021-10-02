@@ -18,7 +18,7 @@
 </div>
 
 
-    <div th:text="post : ${posts}">
+    <div th:text=" ${posts}">
 <h3 th:text="${post.title}">Title</h3>
 <div th:text="${post.body}">Body</div>
         <p th:text="${post.owner.username}" ></p>
