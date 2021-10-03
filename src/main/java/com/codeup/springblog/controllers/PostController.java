@@ -33,21 +33,16 @@ public class PostController {
 
     @GetMapping("/posts")
     public String showPosts(Model model) {
-//        List<Post> allPosts = new ArrayList<>();
         List<Post> allPosts = postDao.findAll();
 
-
-//        allPosts.add(new Post("post!", "post1 body"));
-//        allPosts.add(new Post("post@", "post2 body"));
-
         model.addAttribute("posts", allPosts);
+        System.out.println("hello");
         return "post/index";
     }
 
     @GetMapping("/posts/{id}")
     public String showOnePost(@PathVariable long id, Model model) {
 
-//        Post post = new Post("Fun title", "Fun body");
         Post post = postDao.getById(id);
 
         model.addAttribute("postId", id);
